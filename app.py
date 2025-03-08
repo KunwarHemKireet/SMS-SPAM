@@ -18,12 +18,16 @@ if os.path.exists(nltk_data_path):
 os.makedirs(nltk_data_path, exist_ok=True)
 nltk.data.path.append(nltk_data_path)
 
-# Ensure required NLTK resources are downloaded
+# ✅ Ensure required NLTK resources are force-downloaded
 for resource in ["punkt", "stopwords"]:
     try:
-        nltk.data.find(f"corpora/{resource}")
+        nltk.data.find(f"tokenizers/{resource}")
     except LookupError:
-        nltk.download(resource, download_dir=nltk_data_path)
+        nltk.download(resource, download_dir=nltk_data_path, force=True)
+
+# ✅ Explicitly set NLTK's default data path to avoid issues
+nltk.data.path.append(nltk_data_path)
+
 
 from nltk.stem.porter import PorterStemmer
 ps = PorterStemmer()
